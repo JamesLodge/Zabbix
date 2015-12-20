@@ -1,8 +1,9 @@
-Zabbix Template for FreeBSD IOCage
+﻿Zabbix Template for FreeBSD IOCage
 
 Dependancies:
+IOCage 			   	Jail Manager utilizing ZFS 
 Zabbix_Agentd					
-gsed-4.2.2                     The GNU stream editor
+gsed-4.2.2                     	The GNU stream editor
 
 
 1. install gsed from packages
