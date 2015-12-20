@@ -1,10 +1,16 @@
 ﻿Zabbix Template for FreeBSD IOCage
 
 Dependancies:
-IOCage 			   	Jail Manager utilizing ZFS 
+IOCage 			   				Jail Manager utilizing ZFS 
 Zabbix_Agentd					
 gsed-4.2.2                     	The GNU stream editor
 
+LLD Discovery: Jails (running and stopped), VNET Interface, Hostname from Jail UUID. 
+
+This template uses the UUID of the IOCage jail to track its resources. For instance, when a jail is restarted, it will assume a new Jail ID. If VNET/VIMAGE
+is being used, the name of the interface on the host will change and as such, zabbix will drop the discovered item and create a new one, losing
+old data (e.g. traffic statistics). With this template, IOCage jail can be stopped/started with items persisting the change in Jail ID. Also (though yet
+to be tested) items should persist jails being migrated to new hosts that also employ IOCage. 
 
 1. install gsed from packages
 
