@@ -1,0 +1,28 @@
+#######IOCage VNET Interface Discovery########
+UserParameter=freebsd.jail.iocage.discover, /sbin/ifconfig | grep description | awk '{print $ 5};'  | /usr/bin/sed -e '$ ! s/\(.*\)/ {"{#VNETINT}":"\1"},/' | /usr/bin/sed -e '$  s/\(.*\)/{"{#VNETINT}":"\1"}]}/' | /usr/local/bin/gsed -e '1 i { \"data\":['
+UserParameter=freebsd.jail.iocage.all.jail.discover,/usr/local/sbin/iocage list | grep -v UUID | awk '{print $ 2};' | /usr/bin/sed -e '$ ! s/\(.*\)/ {"{#JAILUUID}":"\1"},/' | /usr/bin/sed -e '$  s/\(.*\)/{"{#JAILUUID}":"\1"}]}/' | /usr/local/bin/gsed -e '1 i { \"data\":['
+UserParameter=freebsd.jail.iocage.vnet.int.ip4.pkts.in[*],netstat -i -b -n -I `ifconfig | grep -B 1 $1 | grep -v $1 | awk '{print $ 1} ; ' | sed s'/.$//'` | grep 1500 | awk '{print $ 5};'
+UserParameter=freebsd.jail.iocage.vnet.int.ip4.err.in[*],netstat -i -b -n -I `ifconfig | grep -B 1 $1 | grep -v $1 | awk '{print $ 1} ; ' | sed s'/.$//'` | grep 1500 | awk '{print $ 6};'
+UserParameter=freebsd.jail.iocage.vnet.int.ip4.drop.in[*],netstat -i -b -n -I `ifconfig | grep -B 1 $1 | grep -v $1 | awk '{print $ 1} ; ' | sed s'/.$//'` | grep 1500 | awk '{print $ 7};'
+UserParameter=freebsd.jail.iocage.vnet.int.ip4.bytes.in[*],netstat -i -b -n -I `ifconfig | grep -B 1 $1 | grep -v $1 | awk '{print $ 1} ; ' | sed s'/.$//'` | grep 1500 | awk '{print $ 8};'
+UserParameter=freebsd.jail.iocage.vnet.int.ip4.pkts.out[*],netstat -i -b -n -I `ifconfig | grep -B 1 $1 | grep -v $1 | awk '{print $ 1} ; ' | sed s'/.$//'` | grep 1500 | awk '{print $ 9};'
+UserParameter=freebsd.jail.iocage.vnet.int.ip4.err.out[*],netstat -i -b -n -I `ifconfig | grep -B 1 $1 | grep -v $1 | awk '{print $ 1} ; ' | sed s'/.$//'` | grep 1500 | awk '{print $ 10};'
+UserParameter=freebsd.jail.iocage.vnet.int.ip4.bytes.out[*],netstat -i -b -n -I `ifconfig | grep -B 1 $1 | grep -v $1 | awk '{print $ 1} ; ' | sed s'/.$//'` | grep 1500 | awk '{print $ 11};'
+UserParameter=freebsd.jail.iocage.vnet.int.ip4.collisions[*],netstat -i -b -n -I `ifconfig | grep -B 1 $1 | grep -v $1 | awk '{print $ 1} ; ' | sed s'/.$//'` | grep 1500 | awk '{print $ 12};'
+#UserParameter=freebsd.jail.iocage.hostname[*],/usr/local/sbin/iocage list | grep $1 | awk '{print $ 5};'
+######IOCage VNET Interface Discovery END#########
+
+
+######IOCage Jail START############
+UserParameter=freebsd.jail.iocage.all.jail.status[*],iocage list | grep $1 | awk '{if ( $ 4 == "up" ) print 1; else print 0;};'
+
+UserParameter=freebsd.jail.iocage.all.jail.hostname[*],/usr/local/sbin/iocage list | grep $1 | awk '{print $ 5};'
+######IOCage Jail END#############
+
+
+######ZFS POOL/DATASET START#########
+
+UserParameter=freebsd.jail.iocage.zfspool.discover,iocage activate |  awk '{print $ 2"/"};' | /usr/bin/sed -e '$ ! s/\(.*\)/ {"{#POOLNAME}":"\1"},/' | /usr/bin/sed -e '$  s/\(.*\)/{"{#POOLNAME}":"\1"}]}/' | /usr/local/bin/gsed -e '1 i { \"data\":['
+
+
+######ZFS POOL/DATASET END#########
