@@ -1,4 +1,4 @@
-﻿Zabbix Template for FreeBSD IOCage
+﻿Zabbix Template for FreeBSD IOCage : SNMP Not Required
 
 Dependancies:
 IOCage 			   				Jail Manager utilizing ZFS 
@@ -29,3 +29,5 @@ Change the directory as needed for your installation.
 	1 ⇒ Up
 
 4. Import template zbx_FreeBSD_IOCage_Jails_templates.xml
+
+
